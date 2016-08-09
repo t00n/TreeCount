@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{% block content %}
+	<form action="/expense/create/" method="post">
+	    {% csrf_token %}
+	  	{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "star" %} Créer
+			</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

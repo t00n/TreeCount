@@ -1,5 +1,7 @@
-from models import Expense
+from .models import Expense
 from django import forms
 
-class ExpenseAddForm(forms.Form):
-	pass
+class ExpenseForm(forms.ModelForm):
+	class Meta:
+		model = Expense
+		fields = ['description', 'amount', 'creditors', 'debitors']
