@@ -35,18 +35,16 @@ def expense_modify(request, id):
 
 @login_required
 def expense_list(request):
-	expenses = Expense.objects.all().prefetch_related('creditors').prefetch_related('debitors')
+	expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
 	return render(request, "expense_list.html", {'expenses': expenses})
 
 @login_required
 def balance(request):
-	expenses = Expense.objects.all().prefetch_related('creditors').prefetch_related('debitors')
+	expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
 	balance = defaultdict(lambda: 0)
 	for expense in expenses:
-		amount_given = expense.amount / len(expense.creditors.all())
 		amount_due = expense.amount / len(expense.debitors.all())
-		for creditor in expense.creditors.all():
-			balance[creditor.username] += amount_given
+		balance[expense.creditor.username] += expense.amount
 		for debitor in expense.debitors.all():
 			balance[debitor.username] -= amount_due
 	balance = dict(balance)

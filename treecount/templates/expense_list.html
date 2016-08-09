@@ -2,15 +2,12 @@
 
 {% block content %}
 	<table class="table">
-		<tr><th>Date</th><th>Description</th><th>Amount</th><th>Creditors</th><th>Debitors</th></tr>
+		<tr><th>Date</th><th>Description</th><th>Amount</th><th>Creditor</th><th>Debitors</th></tr>
 		{% for expense in expenses %}
 			<tr><td>{{ expense.date }}</td>
 				<td>{{ expense.description }}</td>
 				<td>{{ expense.amount }}</td>
-				<td>{% for creditor in expense.creditors.all %} 
-						{{ creditor.username }}
-					{% endfor %}
-				</td>
+				<td>{{ expense.creditor.username }}</td>
 				<td>{% for debitor in expense.debitors.all %} 
 						{{ debitor.username }}
 					{% endfor %}
