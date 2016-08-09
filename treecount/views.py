@@ -8,7 +8,7 @@ from .forms import ExpenseForm
 from .models import Expense
 
 @login_required
-def expense_create(request):
+def expense_add(request):
 	if request.method == "POST":
 		form = ExpenseForm(request.POST)
 		if form.is_valid():
@@ -16,7 +16,7 @@ def expense_create(request):
 			return HttpResponseRedirect('/')
 	else:
 		form = ExpenseForm()
-	return render(request, "expense_create.html", {'form': form})
+	return render(request, "expense_add.html", {'form': form})
 
 @login_required
 def expense_list(request):
