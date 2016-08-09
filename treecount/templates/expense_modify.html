@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{% block content %}
+	<form action="{% url 'expense_modify' expense.id %}" method="post">
+	    {% csrf_token %}
+	  	{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "star" %} Modify
+			</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

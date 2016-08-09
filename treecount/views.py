@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import UpdateView
 
 from collections import defaultdict
 
@@ -17,6 +18,20 @@ def expense_add(request):
 	else:
 		form = ExpenseForm()
 	return render(request, "expense_add.html", {'form': form})
+
+@login_required
+def expense_modify(request, id):
+	if request.method == "POST":
+		expense = get_object_or_404(Expense, pk=id)
+		form = ExpenseForm(request.POST, instance=expense)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/')
+	else:
+		expense = get_object_or_404(Expense, pk=id)
+		form = ExpenseForm(instance=expense)
+	return render(request, "expense_modify.html", {'form': form, 'expense': expense})
+
 
 @login_required
 def expense_list(request):
