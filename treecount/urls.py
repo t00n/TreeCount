@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .views import expense_create, expense_list
+from .views import expense_create, expense_list, balance
 
 urlpatterns = [
 	url('^$', expense_list),
     url('^', include('django.contrib.auth.urls')),
     url(r'^expense/create/', expense_create),
+    url(r'^balance/', balance),
     url(r'^admin/', admin.site.urls),
 ]

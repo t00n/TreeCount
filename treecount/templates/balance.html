@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<table class="table">
+		<tr><th>Username</th><th>Balance (positive is owed money and negative owes money)</th></tr>
+		{% for key, value in balance.items %} 
+			<tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+		{% endfor %}
+	</table>
+	<a href="/">Go to expense list</a>
+{% endblock %}
