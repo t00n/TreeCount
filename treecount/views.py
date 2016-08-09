@@ -17,6 +17,6 @@ def expense_create(request):
 	return render(request, "expense_create.html", {'form': form})
 
 @login_required
-def index(request):
+def expense_list(request):
 	expenses = Expense.objects.all().prefetch_related('creditors').prefetch_related('debitors')
-	return render(request, "index.html", {'expenses': expenses})
+	return render(request, "expense_list.html", {'expenses': expenses})
