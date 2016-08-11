@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic.list import ListView
 
 from collections import defaultdict
 
@@ -34,10 +35,10 @@ def expense_modify(request, id):
     return render(request, "expense_modify.html", {'form': form, 'expense': expense})
 
 
-@login_required
-def expense_list(request):
-    expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
-    return render(request, "expense_list.html", {'expenses': expenses})
+class ExpenseListView(ListView):
+    model = Expense
+    paginate_by = 42
+    template_name = 'expense_list.html'
 
 
 @login_required

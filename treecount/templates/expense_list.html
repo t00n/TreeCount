@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<table class="table">
-		<tr><th>Date</th><th>Description</th><th>Amount</th><th>Creditor</th><th>Debitors</th></tr>
-		{% for expense in expenses %}
-			<tr><td>{{ expense.date }}</td>
-				<td>{{ expense.description }}</td>
-				<td>{{ expense.amount }}</td>
-				<td>{{ expense.creditor.username }}</td>
-				<td>{% for debitor in expense.debitors.all %} 
-						{{ debitor.username }}
-					{% endfor %}
-				</td>
-				<td><a href="/expense/modify/{{ expense.id }}/">Modify</a></td>
-			</tr>
-		{% endfor %}
-	</table>
+    {% include "partials/pager.html" %}
+
+    <table class="table">
+        <tr><th>Date</th><th>Description</th><th>Amount</th><th>Creditor</th><th>Debitors</th></tr>
+        {% for expense in object_list %}
+            <tr><td>{{ expense.date }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.creditor.username }}</td>
+                <td>{% for debitor in expense.debitors.all %} 
+                        {{ debitor.username }}
+                    {% endfor %}
+                </td>
+                <td><a href="/expense/modify/{{ expense.id }}/">Modify</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% include "partials/pager.html" %}
 {% endblock %}

@@ -15,14 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .views import expense_add, expense_list, balance, expense_modify
+from django.contrib.auth.decorators import login_required
+
+from .views import expense_add, ExpenseListView, balance, expense_modify
+
+expense_list = login_required(ExpenseListView.as_view())
 
 urlpatterns = [
-	url('^$', expense_list),
+    url('^$', expense_list, name='home'),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^expense/add/$', expense_add),
-    url(r'^expense/list/$', expense_list),
+    url(r'^expense/add/$', expense_add, name='expense_add'),
+    url(r'^expense/list/$', expense_list, name='expense_list'),
     url(r'^expense/modify/(?P<id>\d+)/$', expense_modify, name="expense_modify"),
-    url(r'^balance/$', balance),
+    url(r'^balance/$', balance, name='balance'),
     url(r'^admin/', admin.site.urls),
 ]
