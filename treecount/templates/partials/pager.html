@@ -1,0 +1,17 @@
+<ul class="pagination">
+    <li>
+        <a href="{% url "expense_list" %}?page=1">
+            <i class="glyphicon glyphicon-fast-backward"></i>
+        </a>
+    </li>
+    {% for i in page_obj.paginator.page_range %}
+    <li class="{% if i == page_obj.number %}active{% endif %}">
+        <a href="{% url "expense_list" %}?page={{i}}">{{i}}</a>
+    </li>
+    {% endfor %}
+    <li>
+        <a href="{% url "expense_list" %}?page={{page_obj.paginator.num_pages}}">
+            <i class="glyphicon glyphicon-fast-forward"></i>
+        </a>
+    </li>
+</ul>
