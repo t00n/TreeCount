@@ -14,7 +14,9 @@
                         {{ debitor.username }}
                     {% endfor %}
                 </td>
-                <td><a href="/expense/modify/{{ expense.id }}/">Modify</a></td>
+                <td>
+                    <a href="{% url "expense_update" expense.id %}">Update</a>
+                </td>
             </tr>
         {% endfor %}
     </table>

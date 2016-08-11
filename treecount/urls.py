@@ -17,16 +17,16 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from .views import expense_add, ExpenseListView, balance, expense_modify
+from .views import ExpenseListView, ExpenseCreate, ExpenseUpdate, balance
 
 expense_list = login_required(ExpenseListView.as_view())
 
 urlpatterns = [
     url('^$', expense_list, name='home'),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^expense/add/$', expense_add, name='expense_add'),
-    url(r'^expense/list/$', expense_list, name='expense_list'),
-    url(r'^expense/modify/(?P<id>\d+)/$', expense_modify, name="expense_modify"),
-    url(r'^balance/$', balance, name='balance'),
+    url(r'^expense/create/$', login_required(ExpenseCreate.as_view(template_name="expense_form.html")), name="expense_create"),
+    url(r'^expense/list/$', expense_list, name="expense_list"),
+    url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdate.as_view(template_name="expense_form.html")), name="expense_update"),
+    url(r'^balance/$', balance),
     url(r'^admin/', admin.site.urls),
 ]
