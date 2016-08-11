@@ -13,3 +13,12 @@ class Expense(models.Model):
 
 	class Meta:
 		ordering = ('date',)
+
+class Refund(models.Model):
+	date = models.DateField(default=datetime.datetime.now)
+	amount = models.FloatField()
+	creditor = models.ForeignKey(User, related_name='refund_creditor')
+	debitor = models.ForeignKey(User, related_name='refund_debitor')
+	
+	class Meta:
+		ordering = ('date',)
