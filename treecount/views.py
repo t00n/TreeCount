@@ -1,51 +1,47 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from collections import defaultdict
 
 from .forms import ExpenseForm
 from .models import Expense
 
-@login_required
-def expense_add(request):
-	if request.method == "POST":
-		form = ExpenseForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/')
-	else:
-		form = ExpenseForm()
-	return render(request, "expense_add.html", {'form': form})
+class ExpenseCreate(CreateView):
+    model = Expense
+    fields = ['date', 'description', 'amount', 'creditor', 'debitors']
+    success_url = "/expense/list"
 
-@login_required
-def expense_modify(request, id):
-	if request.method == "POST":
-		expense = get_object_or_404(Expense, pk=id)
-		form = ExpenseForm(request.POST, instance=expense)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/')
-	else:
-		expense = get_object_or_404(Expense, pk=id)
-		form = ExpenseForm(instance=expense)
-	return render(request, "expense_modify.html", {'form': form, 'expense': expense})
+    def get_context_data(self, **kwargs):
+        context = super(ExpenseCreate, self).get_context_data(**kwargs)
+        context['button_value'] = "Create"
+        return context
+
+class ExpenseUpdate(UpdateView):
+    model = Expense
+    fields = ['date', 'description', 'amount', 'creditor', 'debitors']
+    success_url = "/expense/list"
+
+    def get_context_data(self, **kwargs):
+        context = super(ExpenseUpdate, self).get_context_data(**kwargs)
+        context['button_value'] = "Update"
+        return context
 
 
 @login_required
 def expense_list(request):
-	expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
-	return render(request, "expense_list.html", {'expenses': expenses})
+    expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
+    return render(request, "expense_list.html", {'expenses': expenses})
 
 @login_required
 def balance(request):
-	expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
-	balance = defaultdict(lambda: 0)
-	for expense in expenses:
-		amount_due = expense.amount / len(expense.debitors.all())
-		balance[expense.creditor.username] += expense.amount
-		for debitor in expense.debitors.all():
-			balance[debitor.username] -= amount_due
-	balance = dict(balance)
-	return render(request, "balance.html", {'balance': balance})
+    expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
+    balance = defaultdict(lambda: 0)
+    for expense in expenses:
+        amount_due = expense.amount / len(expense.debitors.all())
+        balance[expense.creditor.username] += expense.amount
+        for debitor in expense.debitors.all():
+            balance[debitor.username] -= amount_due
+    balance = dict(balance)
+    return render(request, "balance.html", {'balance': balance})

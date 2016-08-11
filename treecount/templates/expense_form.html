@@ -4,12 +4,12 @@
 {% load bootstrap3 %}
 
 {% block content %}
-	<form action="{% url 'expense_modify' expense.id %}" method="post">
+	<form action="" method="post">
 	    {% csrf_token %}
 	  	{% bootstrap_form form %}
 		{% buttons %}
 			<button type="submit" class="btn btn-primary">
-				{% bootstrap_icon "star" %} Modify
+				{% bootstrap_icon "star" %} {{ button_value }}
 			</button>
 		{% endbuttons %}
 	</form>

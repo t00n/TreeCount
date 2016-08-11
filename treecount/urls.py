@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .views import expense_add, expense_list, balance, expense_modify
+from django.contrib.auth.decorators import login_required
+from .views import ExpenseCreate, expense_list, balance, ExpenseUpdate
 
 urlpatterns = [
 	url('^$', expense_list),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^expense/add/$', expense_add),
-    url(r'^expense/list/$', expense_list),
-    url(r'^expense/modify/(?P<id>\d+)/$', expense_modify, name="expense_modify"),
+    url(r'^expense/create/$', login_required(ExpenseCreate.as_view(template_name="expense_form.html")), name="expense_create"),
+    url(r'^expense/list/$', expense_list, name="expense_list"),
+    url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdate.as_view(template_name="expense_form.html")), name="expense_update"),
     url(r'^balance/$', balance),
     url(r'^admin/', admin.site.urls),
 ]
