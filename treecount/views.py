@@ -7,6 +7,7 @@ from collections import defaultdict
 from .forms import ExpenseForm
 from .models import Expense
 
+
 @login_required
 def expense_add(request):
     if request.method == "POST":
@@ -17,6 +18,7 @@ def expense_add(request):
     else:
         form = ExpenseForm()
     return render(request, "expense_add.html", {'form': form})
+
 
 @login_required
 def expense_modify(request, id):
@@ -36,6 +38,7 @@ def expense_modify(request, id):
 def expense_list(request):
     expenses = Expense.objects.all().prefetch_related('creditor').prefetch_related('debitors')
     return render(request, "expense_list.html", {'expenses': expenses})
+
 
 @login_required
 def balance(request):
