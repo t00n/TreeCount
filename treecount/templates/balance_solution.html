@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<table class="table">
+		<tr><th>From</th><th>Amount</th><th>To</th></tr>
+		{% for from, value in balance_solution.items %} 
+			{% for to, amount in value.items %}
+				<tr><td>{{ from }}</td><td>{{ amount }}</td><td>{{ to }}</td></tr>
+			{% endfor %}
+		{% endfor %}
+	</table>
+{% endblock %}

@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from .views import ExpenseListView, ExpenseCreate, ExpenseUpdate, balance
+from .views import ExpenseListView, ExpenseCreate, ExpenseUpdate, balance, balance_solution
 
 expense_list = login_required(ExpenseListView.as_view())
 
@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^expense/list/$', expense_list, name="expense_list"),
     url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdate.as_view(template_name="expense_form.html")), name="expense_update"),
     url(r'^balance/$', balance),
+    url(r'^balance_solution/$', balance_solution),
     url(r'^admin/', admin.site.urls),
 ]
