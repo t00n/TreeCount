@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "partials/pager.html" %}
+
+    <table class="table">
+        <tr><th>Date</th><th>Amount</th><th>Creditor</th><th>Debitor</th></tr>
+        {% for refund in refund_list %}
+            <tr><td>{{ refund.date }}</td>
+                <td>{{ refund.amount }}</td>
+                <td>{{ refund.creditor.username }}</td>
+                <td>{{ refund.debitor.username }}</td>
+                <td>
+                    <a href="{% url "refund_update" refund.id %}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% include "partials/pager.html" %}
+{% endblock %}
