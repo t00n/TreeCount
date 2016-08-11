@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from .views import ExpenseListView, ExpenseCreate, ExpenseUpdate
+from .views import ExpenseListView, ExpenseCreateView, ExpenseUpdateView
 from .views import RefundListView, RefundCreateView, RefundUpdateView
 from .views import balance, balance_solution
 
@@ -26,9 +26,9 @@ expense_list = login_required(ExpenseListView.as_view())
 urlpatterns = [
     url('^$', expense_list, name='home'),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^expense/create/$', login_required(ExpenseCreate.as_view(template_name="expense_form.html")), name="expense_create"),
+    url(r'^expense/create/$', login_required(ExpenseCreateView.as_view()), name="expense_create"),
     url(r'^expense/list/$', expense_list, name="expense_list"),
-    url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdate.as_view(template_name="expense_form.html")), name="expense_update"),
+    url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdateView.as_view()), name="expense_update"),
     url(r'^refund/create/$', login_required(RefundCreateView.as_view()), name="refund_create"),
     url(r'^refund/list/$', login_required(RefundListView.as_view())),
     url(r'^refund/update/(?P<pk>\d+)/$', login_required(RefundUpdateView.as_view()), name="refund_update"),

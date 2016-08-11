@@ -14,24 +14,26 @@ class ExpenseListView(ListView):
     template_name = 'expense_list.html'
 
 
-class ExpenseCreate(CreateView):
+class ExpenseCreateView(CreateView):
     model = Expense
     fields = ['date', 'description', 'amount', 'creditor', 'debitors']
     success_url = "/expense/list"
+    template_name = 'object_form.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExpenseCreate, self).get_context_data(**kwargs)
+        context = super(ExpenseCreateView, self).get_context_data(**kwargs)
         context['button_value'] = "Create"
         return context
 
 
-class ExpenseUpdate(UpdateView):
+class ExpenseUpdateView(UpdateView):
     model = Expense
     fields = ['date', 'description', 'amount', 'creditor', 'debitors']
     success_url = "/expense/list"
+    template_name = 'object_form.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExpenseUpdate, self).get_context_data(**kwargs)
+        context = super(ExpenseUpdateView, self).get_context_data(**kwargs)
         context['button_value'] = "Update"
         return context
 
@@ -44,7 +46,7 @@ class RefundCreateView(CreateView):
     model = Refund
     fields = ['date', 'amount', 'creditor', 'debitor']
     success_url = "/refund/list"
-    template_name = "expense_form.html"
+    template_name = "object_form.html"
 
     def get_context_data(self, **kwargs):
         context = super(RefundCreateView, self).get_context_data(**kwargs)
@@ -55,7 +57,7 @@ class RefundUpdateView(UpdateView):
     model = Refund
     fields = ['date', 'amount', 'creditor', 'debitor']
     success_url = "/refund/list"
-    template_name = "expense_form.html"
+    template_name = "object_form.html"
 
     def get_context_data(self, **kwargs):
         context = super(RefundUpdateView, self).get_context_data(**kwargs)
