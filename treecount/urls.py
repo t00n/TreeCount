@@ -30,9 +30,9 @@ urlpatterns = [
     url(r'^expense/list/$', expense_list, name="expense_list"),
     url(r'^expense/update/(?P<pk>\d+)/$', login_required(ExpenseUpdateView.as_view()), name="expense_update"),
     url(r'^refund/create/$', login_required(RefundCreateView.as_view()), name="refund_create"),
-    url(r'^refund/list/$', login_required(RefundListView.as_view())),
+    url(r'^refund/list/$', login_required(RefundListView.as_view()), name="refund_list"),
     url(r'^refund/update/(?P<pk>\d+)/$', login_required(RefundUpdateView.as_view()), name="refund_update"),
-    url(r'^balance/$', balance),
-    url(r'^balance_solution/$', balance_solution),
+    url(r'^balance/$', balance, name="balance"),
+    url(r'^balance_solution/$', balance_solution, name="balance_solution"),
     url(r'^admin/', admin.site.urls),
 ]
