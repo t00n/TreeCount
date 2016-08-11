@@ -4,4 +4,4 @@ from django import forms
 class ExpenseForm(forms.ModelForm):
 	class Meta:
 		model = Expense
-		fields = ['description', 'amount', 'creditor', 'debitors']
+		fields = ['date', 'description', 'amount', 'creditor', 'debitors']

@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 
 class Expense(models.Model):
-	date = models.DateField(auto_now_add=True)
+	date = models.DateField(default=datetime.datetime.now)
 	description = models.CharField(max_length=500)
 	amount = models.FloatField()
 	creditor = models.ForeignKey(User, related_name='creditor')
