@@ -12,7 +12,7 @@ class Expense(models.Model):
 	debitors = models.ManyToManyField(User, related_name='debitor')
 
 	class Meta:
-		ordering = ('date',)
+		ordering = ('-date',)
 
 class Refund(models.Model):
 	date = models.DateField(default=datetime.datetime.now)
@@ -21,4 +21,4 @@ class Refund(models.Model):
 	debitor = models.ForeignKey(User, related_name='refund_debitor')
 	
 	class Meta:
-		ordering = ('date',)
+		ordering = ('-date',)
