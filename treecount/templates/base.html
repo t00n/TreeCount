@@ -28,14 +28,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/expense/create/">Add an expense</a></li>
-            <li><a href="/expense/list/">Show expenses</a></li>
-            <li><a href="/refund/create/">Add a refund</a></li>
-            <li><a href="/refund/list/">Show refunds</a></li>
-            <li><a href="/balance/">Show balance</a></li>
-            <li><a href="/balance_solution/">Show balance solution</a></li>
+            <li><a href="{% url 'expense_create' %}">Add an expense</a></li>
+            <li><a href="{% url 'expense_list' %}">Show expenses</a></li>
+            <li><a href="{% url 'refund_create' %}">Add a refund</a></li>
+            <li><a href="{% url 'refund_list' %}">Show refunds</a></li>
+            <li><a href="{% url 'balance' %}">Show balance</a></li>
+            <li><a href="{% url 'balance_solution' %}">Show balance solution</a></li>
             {% if request.user.is_authenticated %}
-                <li><a href="/logout/?next=/">{% bootstrap_icon "log-out" %} Logout</a></li>
+                <li><a href="{% url 'logout' %}?next=/">{% bootstrap_icon "log-out" %} Logout</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
