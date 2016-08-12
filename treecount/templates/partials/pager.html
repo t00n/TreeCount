@@ -1,7 +1,8 @@
+{% load bootstrap3 %}
 <ul class="pagination">
     <li>
         <a href="{{ request.path }}?page=1">
-            <i class="glyphicon glyphicon-fast-backward"></i>
+            {% bootstrap_icon "fast-backward" %}
         </a>
     </li>
     {% for i in page_obj.paginator.page_range %}
@@ -11,7 +12,7 @@
     {% endfor %}
     <li>
         <a href="{{ request.path }}?page={{page_obj.paginator.num_pages}}">
-            <i class="glyphicon glyphicon-fast-forward"></i>
+            {% bootstrap_icon "fast-forward" %}
         </a>
     </li>
 </ul>
