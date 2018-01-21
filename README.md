@@ -21,6 +21,8 @@ pip install -r requirements.lock
 python manage.py migrate
 ```
 
+Optionally, set specific settings in `treecount/local_settings.py`
+
 Run the server however you want (there is a `treecount.wsgi` module if you want to deploy it cleanly)
 
 # Usage
