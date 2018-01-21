@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.forms import ModelForm
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
 from collections import defaultdict
 
-from .models import Expense, Refund
+from .models import Expense, Refund, User
 
 
 class ExpenseListView(ListView):
@@ -14,11 +15,22 @@ class ExpenseListView(ListView):
     template_name = 'expense_list.html'
 
 
+class ExpenseForm(ModelForm):
+    class Meta:
+        model = Expense
+        fields = ('date', 'description', 'amount', 'creditor', 'debitors')
+
+    def __init__(self, *args, **kwargs):
+        super(ExpenseForm, self).__init__(*args, **kwargs)
+        self.fields['creditor'].queryset = User.objects.filter(is_active=True)
+        self.fields['debitors'].queryset = User.objects.filter(is_active=True)
+
+
 class ExpenseCreateView(CreateView):
     model = Expense
-    fields = ['date', 'description', 'amount', 'creditor', 'debitors']
     success_url = "/expense/list"
     template_name = 'object_form.html'
+    form_class = ExpenseForm
 
     def get_context_data(self, **kwargs):
         context = super(ExpenseCreateView, self).get_context_data(**kwargs)
@@ -28,41 +40,56 @@ class ExpenseCreateView(CreateView):
 
 class ExpenseUpdateView(UpdateView):
     model = Expense
-    fields = ['date', 'description', 'amount', 'creditor', 'debitors']
     success_url = "/expense/list"
     template_name = 'object_form.html'
+    form_class = ExpenseForm
 
     def get_context_data(self, **kwargs):
         context = super(ExpenseUpdateView, self).get_context_data(**kwargs)
         context['button_value'] = "Update"
         return context
 
+
 class RefundListView(ListView):
     model = Refund
     paginate_by = 42
     template_name = 'refund_list.html'
 
+
+class RefundForm(ModelForm):
+    class Meta:
+        model = Refund
+        fields = ('date', 'amount', 'creditor', 'debitor')
+
+    def __init__(self, *args, **kwargs):
+        super(ExpenseForm, self).__init__(*args, **kwargs)
+        self.fields['creditor'].queryset = User.objects.filter(is_active=True)
+        self.fields['debitor'].queryset = User.objects.filter(is_active=True)
+
+
 class RefundCreateView(CreateView):
     model = Refund
-    fields = ['date', 'amount', 'creditor', 'debitor']
     success_url = "/refund/list"
     template_name = "object_form.html"
+    form_class = RefundForm
 
     def get_context_data(self, **kwargs):
         context = super(RefundCreateView, self).get_context_data(**kwargs)
         context['button_value'] = "Create"
         return context
 
+
 class RefundUpdateView(UpdateView):
     model = Refund
-    fields = ['date', 'amount', 'creditor', 'debitor']
     success_url = "/refund/list"
     template_name = "object_form.html"
+    form_class = RefundForm
 
     def get_context_data(self, **kwargs):
         context = super(RefundUpdateView, self).get_context_data(**kwargs)
         context['button_value'] = "Update"
         return context
+
 
 def compute_balance(expenses, refunds):
     balance = defaultdict(lambda: 0)
@@ -76,12 +103,14 @@ def compute_balance(expenses, refunds):
         balance[refund.debitor.username] -= refund.amount
     return dict(balance)
 
+
 def compute_balance_solution(balance):
     def get_negative(balance):
         for k, v in balance.items():
             if v < 0:
                 return k
         return None
+
     def get_positive(balance):
         for k, v in balance.items():
             if v > 0:
@@ -106,6 +135,7 @@ def balance(request):
     refunds = Refund.objects.all().prefetch_related('creditor').prefetch_related('debitor')
     balance = compute_balance(expenses, refunds)
     return render(request, "balance.html", {'balance': balance})
+
 
 @login_required
 def balance_solution(request):
