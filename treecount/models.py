@@ -4,7 +4,7 @@ import datetime
 from uuid import uuid4
 
 
-def name_for_upload(*args, **kwargs):
+def name_for_upload(obj, filename):
         return str(uuid4())
 
 
@@ -12,7 +12,8 @@ class Expense(models.Model):
     date = models.DateField(default=datetime.datetime.now)
     description = models.CharField(max_length=500)
     amount = models.FloatField()
-    creditor = models.ForeignKey(User, related_name='creditor')
+    creditor = models.ForeignKey(User, related_name='creditor',
+                                 on_delete=models.CASCADE)
     debitors = models.ManyToManyField(User, related_name='debitor')
     proof = models.FileField(blank=True, verbose_name="Proof of payment",
                              upload_to=name_for_upload)
@@ -24,8 +25,10 @@ class Expense(models.Model):
 class Refund(models.Model):
     date = models.DateField(default=datetime.datetime.now)
     amount = models.FloatField()
-    creditor = models.ForeignKey(User, related_name='refund_creditor')
-    debitor = models.ForeignKey(User, related_name='refund_debitor')
+    creditor = models.ForeignKey(User, related_name='refund_creditor',
+                                 on_delete=models.CASCADE)
+    debitor = models.ForeignKey(User, related_name='refund_debitor',
+                                on_delete=models.CASCADE)
     proof = models.FileField(blank=True, verbose_name="Proof of payment",
                              upload_to=name_for_upload)
 
