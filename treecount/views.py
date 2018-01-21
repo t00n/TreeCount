@@ -62,7 +62,7 @@ class RefundForm(ModelForm):
         fields = ('date', 'amount', 'creditor', 'debitor')
 
     def __init__(self, *args, **kwargs):
-        super(ExpenseForm, self).__init__(*args, **kwargs)
+        super(RefundForm, self).__init__(*args, **kwargs)
         self.fields['creditor'].queryset = User.objects.filter(is_active=True)
         self.fields['debitor'].queryset = User.objects.filter(is_active=True)
 
