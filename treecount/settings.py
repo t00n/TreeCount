@@ -121,6 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'treecount/static/media')
+MEDIA_URL = '/static/media/'
+
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 

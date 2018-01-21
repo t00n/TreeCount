@@ -1,12 +1,31 @@
 {% extends "base.html" %}
 
+{% load bootstrap3 %}
+
 {% block content %}
     {% include "partials/pager.html" %}
 
-    <table class="table">
-        <tr><th>Date</th><th>Description</th><th>Amount</th><th>Creditor</th><th>Debitors</th></tr>
+    <table class="table table-striped">
+        <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Creditor</th>
+            <th>Debitors</th>
+            <th></th>
+        </tr>
         {% for expense in object_list %}
-            <tr><td>{{ expense.date }}</td>
+            <tr>
+                <td>
+                    {% if expense.proof %}
+                        <a target="_blank" href="{{ expense.proof.url }}"
+                           title="View proof of payment">
+                            {% bootstrap_icon "file" %}
+                        </a>
+                    {% endif %}
+                </td>
+                <td>{{ expense.date }}</td>
                 <td>{{ expense.description }}</td>
                 <td>{{ expense.amount }}</td>
                 <td>{{ expense.creditor.username }}</td>
@@ -15,7 +34,10 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="{% url "expense_update" expense.id %}">Update</a>
+                    <a href="{% url "expense_update" expense.id %}">
+                        {% bootstrap_icon "edit" %}
+                        Update
+                    </a>
                 </td>
             </tr>
         {% endfor %}

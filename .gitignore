@@ -2,3 +2,4 @@
 ve/
 *.sqlite*
 local_settings.py
+treecount/static/media/

@@ -18,7 +18,9 @@ class ExpenseListView(ListView):
 class ExpenseForm(ModelForm):
     class Meta:
         model = Expense
-        fields = ('date', 'description', 'amount', 'creditor', 'debitors')
+        fields = (
+            'date', 'description', 'amount', 'creditor', 'debitors', 'proof'
+        )
 
     def __init__(self, *args, **kwargs):
         super(ExpenseForm, self).__init__(*args, **kwargs)
@@ -59,7 +61,7 @@ class RefundListView(ListView):
 class RefundForm(ModelForm):
     class Meta:
         model = Refund
-        fields = ('date', 'amount', 'creditor', 'debitor')
+        fields = ('date', 'amount', 'creditor', 'debitor', 'proof')
 
     def __init__(self, *args, **kwargs):
         super(RefundForm, self).__init__(*args, **kwargs)
