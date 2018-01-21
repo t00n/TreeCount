@@ -58,7 +58,7 @@ class RefundListView(ListView):
 
 class RefundForm(ModelForm):
     class Meta:
-        model = Expense
+        model = Refund
         fields = ('date', 'amount', 'creditor', 'debitor')
 
     def __init__(self, *args, **kwargs):
