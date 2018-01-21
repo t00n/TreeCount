@@ -21,6 +21,13 @@ pip install -r requirements.lock
 python manage.py migrate
 ```
 
+Set the two following variables in `treecount/local_settings.py` to be able to upload files
+
+```
+MEDIA_ROOT = '/home/user/path/to/treecount/treecount/static/media'
+MEDIA_URL = '/static/media/'
+```
+
 Run the server however you want (there is a `treecount.wsgi` module if you want to deploy it cleanly)
 
 # Usage
