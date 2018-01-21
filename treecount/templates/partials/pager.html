@@ -1,7 +1,8 @@
 {% load bootstrap3 %}
 <ul class="pagination">
     <li>
-        <a href="{{ request.path }}?page=1">
+        <a href="{{ request.path }}?page=1"
+           title="Go to first">
             {% bootstrap_icon "fast-backward" %}
         </a>
     </li>
@@ -11,7 +12,8 @@
     </li>
     {% endfor %}
     <li>
-        <a href="{{ request.path }}?page={{page_obj.paginator.num_pages}}">
+        <a href="{{ request.path }}?page={{page_obj.paginator.num_pages}}"
+           title="Go to last">
             {% bootstrap_icon "fast-forward" %}
         </a>
     </li>
