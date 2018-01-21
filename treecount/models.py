@@ -5,7 +5,11 @@ from uuid import uuid4
 
 
 def name_for_upload(obj, filename):
-        return str(uuid4())
+        uid = str(uuid4())
+        ext_position = filename.find('.')
+        if ext_position > 0:
+            return uid + filename[ext_position:]
+        raise ValueError("File extension not found")
 
 
 class Expense(models.Model):
