@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from uuid import uuid4
+
+
+def name_for_upload(*args, **kwargs):
+        return str(uuid4())
 
 
 class Expense(models.Model):
-    def name_for_upload(self, filename):
-        return "expense-{id}-{filename}".format(id=self.id, filename=filename)
-
     date = models.DateField(default=datetime.datetime.now)
     description = models.CharField(max_length=500)
     amount = models.FloatField()
@@ -20,9 +22,6 @@ class Expense(models.Model):
 
 
 class Refund(models.Model):
-    def name_for_upload(self, filename):
-        return "refund-{id}-{filename}".format(id=self.id, filename=filename)
-
     date = models.DateField(default=datetime.datetime.now)
     amount = models.FloatField()
     creditor = models.ForeignKey(User, related_name='refund_creditor')
