@@ -10,7 +10,7 @@ When a group of people share expenses on a regular basis, they might want to kno
 
 # Requirements
 
-Currently, Treecount works with python3 and django 1.10.
+Currently, Treecount works with python3 and django 2.0
 
 # Installation
 
