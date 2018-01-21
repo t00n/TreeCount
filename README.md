@@ -18,6 +18,7 @@ Currently, Treecount works with python3 and django 1.10.
 virtualenv ve
 source ve/bin/activate
 pip install -r requirements.lock
+python manage.py migrate
 ```
 
 Run the server however you want (there is a `treecount.wsgi` module if you want to deploy it cleanly)
