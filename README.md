@@ -4,6 +4,8 @@ Treecount is a small website using python3 and django to manage expenses between
 
 When a group of people share expenses on a regular basis, they might want to know how much money each spends and who to refund.
 
+![screenshot](screenshot.png)
+
 **DISCLAIMER: Treecount assumes that every user is well intentioned and will not try to mess things up. Every user can edit any expense or refund**
 
 **DISCLAIMER AGAIN: Treecount might be full of security holes. Run it on a secure/trusty network**
