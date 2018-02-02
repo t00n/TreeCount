@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.forms import ModelForm
+from django.forms import ModelForm, DateField, DateInput
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
 from collections import defaultdict
 
 from .models import Expense, Refund, User
+
+
+class MyDateInput(DateInput):
+    input_type = "date"
 
 
 class ExpenseListView(ListView):
@@ -16,6 +20,8 @@ class ExpenseListView(ListView):
 
 
 class ExpenseForm(ModelForm):
+    date = DateField(widget=MyDateInput())
+
     class Meta:
         model = Expense
         fields = (
@@ -59,6 +65,8 @@ class RefundListView(ListView):
 
 
 class RefundForm(ModelForm):
+    date = DateField(widget=MyDateInput())
+
     class Meta:
         model = Refund
         fields = ('date', 'amount', 'creditor', 'debitor', 'proof')
